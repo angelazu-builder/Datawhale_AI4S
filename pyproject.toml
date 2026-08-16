@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "kesten-ai-research"
+version = "1.0.0"
+description = "Extended Kesten Wealth Process & Phase Transition AI Autonomous Research Engine"
+readme = "README.md"
+requires-python = ">=3.8"
+license = {text = "MIT"}
+authors = [
+    {name = "AI for Research Team"}
+]
+keywords = ["econophysics", "kesten-process", "active-learning", "ai4science", "phase-transition"]
+dependencies = [
+    "numpy>=1.22.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/Datawhale/Kesten-AI-Research"
