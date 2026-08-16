@@ -6,14 +6,14 @@
 [![Python](https://img.shields.io/badge/Python-3.8%2B-green.svg)](https://www.python.org/)
 [![License](https://img.shields.io/badge/License-MIT-orange.svg)](LICENSE)
 
-> Datawhale AI for Research Camp · Open Exploration Track (Methodologically Revised Edition)
+> Datawhale AI for Research Camp · Open Exploration Track
 
 ---
 
 ## 📌 Quick Navigation
 
 - 🏆 **Competition Deliverables**: [docs/submission/](docs/submission/) (Problem Definition v2, Original Version, & Final Research Report in Word/Markdown)
-- 📔 **Peer Reviewers & Researchers**: [docs/logbook/LOGBOOK_EN.md](docs/logbook/LOGBOOK_EN.md) (60-round exploration data, methodological rigor revisions, & responses to 4 conference feedback items)
+- 📔 **Peer Reviewers & Researchers**: [docs/logbook/LOGBOOK_EN.md](docs/logbook/LOGBOOK_EN.md) (60-round exploration data, experimental iteration logs, & responses to 4 conference feedback items)
 - 📊 **Figures & Data Index**: [outputs/](outputs/) (High-resolution plots and raw CSV/JSON experiment logs)
 - 📖 **Background References**: [docs/references/](docs/references/) (Econophysics slides, challenge background documents)
 

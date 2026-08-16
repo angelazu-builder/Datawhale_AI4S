@@ -8,7 +8,7 @@
 [![Python](https://img.shields.io/badge/Python-3.8%2B-green.svg)](https://www.python.org/)
 [![许可证](https://img.shields.io/badge/许可证-MIT-orange.svg)](LICENSE)
 
-> Datawhale 夏令营 AI for Research · 开放探索赛道 (学术严谨性修订版)
+> Datawhale 夏令营 AI for Research · 开放探索赛道
 
 ---
 
