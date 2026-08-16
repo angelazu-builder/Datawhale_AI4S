@@ -1,4 +1,4 @@
-# Candidate Phase Transitions in Wealth Inequality: an Active Learning Approach on Kesten Stochastic Dynamics
+# Candidate Phase Transitions in Wealth Inequality: An Active Learning Framework for Kesten Stochastic Dynamics
 
 **Datawhale AI for Research Camp · Open Exploration Track Final Research Report**  
 **Stage**: Preliminary (v1.1.0) | **Date**: 2026-08-16  

@@ -2,7 +2,7 @@
 
 # 财富不平等的候选相变现象：基于 Kesten 随机动力学的主动学习实证研究
 
-**Candidate Phase Transitions in Wealth Inequality: an Active Learning Approach on Kesten Stochastic Dynamics**
+**Candidate Phase Transitions in Wealth Inequality: An Active Learning Framework for Kesten Stochastic Dynamics**
 
 [![版本](https://img.shields.io/badge/版本-v1.1.0-blue.svg)](https://github.com/angelazu-builder/Datawhale_AI4S)
 [![Python](https://img.shields.io/badge/Python-3.8%2B-green.svg)](https://www.python.org/)

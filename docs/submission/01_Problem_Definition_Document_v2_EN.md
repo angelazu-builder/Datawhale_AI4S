@@ -1,7 +1,7 @@
 # Datawhale AI for Research Camp · Open Exploration Track
 ## Problem Definition Document (v2)
 
-**Project Title**: Candidate Phase Transitions in Wealth Inequality: an Active Learning Approach on Kesten Stochastic Dynamics  
+**Project Title**: Candidate Phase Transitions in Wealth Inequality: An Active Learning Framework for Kesten Stochastic Dynamics  
 **Date**: 2026-08-16  
 
 ---

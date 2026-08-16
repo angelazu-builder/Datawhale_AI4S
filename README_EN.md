@@ -1,91 +1,93 @@
 **English** · [中文](README.md)
 
-# Candidate Phase Transitions in Wealth Inequality: an Active Learning Approach on Kesten Stochastic Dynamics
+# Candidate Phase Transitions in Wealth Inequality: An Active Learning Framework for Kesten Stochastic Dynamics
 
 [![Version](https://img.shields.io/badge/Version-v1.1.0-blue.svg)](https://github.com/angelazu-builder/Datawhale_AI4S)
 [![Python](https://img.shields.io/badge/Python-3.8%2B-green.svg)](https://www.python.org/)
 [![License](https://img.shields.io/badge/License-MIT-orange.svg)](LICENSE)
 
-> Datawhale AI for Research Camp · Open Exploration Track (Methodological Rigor Revised Version)
+> Datawhale AI for Research Camp · Open Exploration Track (Methodologically Revised Edition)
 
 ---
 
 ## 📌 Quick Navigation
 
-- 🏆 **Competition Deliverables**: [docs/submission/](docs/submission/) (Contains Problem Definition v2, Original Version, & Final Research Report Word/Markdown)
-- 📔 **Peer Reviewers & Researchers**: [docs/logbook/LOGBOOK.md](docs/logbook/LOGBOOK.md) (Contains 60-round exploration data, methodological rigor revisions, & responses to 4 conference feedback items)
-- 📊 **Figures & Data Index**: [outputs/](outputs/) (High-resolution plots and raw CSV/JSON logs)
+- 🏆 **Competition Deliverables**: [docs/submission/](docs/submission/) (Problem Definition v2, Original Version, & Final Research Report in Word/Markdown)
+- 📔 **Peer Reviewers & Researchers**: [docs/logbook/LOGBOOK_EN.md](docs/logbook/LOGBOOK_EN.md) (60-round exploration data, methodological rigor revisions, & responses to 4 conference feedback items)
+- 📊 **Figures & Data Index**: [outputs/](outputs/) (High-resolution plots and raw CSV/JSON experiment logs)
 - 📖 **Background References**: [docs/references/](docs/references/) (Econophysics slides, challenge background documents)
 
 ---
 
 ## 1. Background & Research Question
 
-The Pareto power-law tail of wealth distribution is a universal phenomenon spanning physics, economics, and social sciences. The **Kesten Stochastic Process** offers its most concise physical mechanism: wealth evolution at each step is co-driven by random multiplicative shocks (growth) and additive dissipation (consumption/loss).
+The Pareto power-law tail of wealth distribution is a universal phenomenon spanning statistical physics, quantitative economics, and social sciences. The **Kesten Stochastic Process** offers its most elegant physical mechanism: wealth evolution at each discrete time step is co-driven by random multiplicative shocks (growth/return) and additive dissipation (consumption/loss).
 
-**Core Research Question**: When the ratio of shock intensity to dissipation rate $R^* = p/c$ crosses a certain critical value, does the poverty left-tail decay exponent $\beta_{\text{left}}$ undergo a **non-continuous candidate phase transition**? Based on the fitting convergence of **Finite-Size Scaling ($N \in [5k, 100k]$)** alongside **MLE (Hill Estimator)** and **Bootstrap 95% Confidence Intervals**, can an AI Active Learning Agent locate this critical threshold more efficiently than random search?
+$$\text{Kesten Dynamics: } W_{t+1} = A_t \cdot W_t + B_t$$
+
+**Core Research Question**: As the ratio of shock intensity to dissipation rate $R^* = p/c$ crosses a critical threshold, does the poverty left-tail decay exponent $\beta_{\text{left}}$ undergo a **non-continuous candidate phase transition**? Grounded in **Finite-Size Scaling ($N \in [5k, 100k]$)** fitted convergence alongside **Maximum Likelihood Estimation (Hill Estimator)** and **Bootstrap 95% Confidence Intervals**, can an Active Learning AI Agent identify this critical boundary more sample-efficiently than random search?
 
 ---
 
 ## 2. Exploration Trajectory (60 Rounds)
 
-The AI Agent's exploration trajectory consists of two stages, with raw logs persisted in [`outputs/kesten_exploration_log.csv`](outputs/kesten_exploration_log.csv):
+The AI Agent's exploration trajectory comprises two distinct phases, with raw logs persisted in [`outputs/kesten_exploration_log.csv`](outputs/kesten_exploration_log.csv):
 
-**Stage 1: Random Baseline Exploration (Rounds 1–30, RandomAgent)**
-Uniform random sampling over $(p, c, \text{boundary})$. The left-tail exponent $\beta_{\text{left}}$ fluctuates wildly (0.92–4.48), occasionally hitting the candidate critical region (e.g., Round 6: $R^*=0.138, \beta=1.78$; Round 18: $R^*=0.007, \beta=4.48$), but fails to establish a systematic law—wasting budget on uninformative high-$R^*$ equilibrium states.
+**Phase 1: Random Baseline Exploration (Rounds 1–30, RandomAgent)**  
+Uniform random sampling over $(p, c, \text{boundary})$. The left-tail exponent $\beta_{\text{left}}$ fluctuates wildly (0.92–4.48), occasionally hitting the candidate critical region (e.g., Round 6: $R^*=0.138, \beta=1.78$; Round 18: $R^*=0.007, \beta=4.48$), but fails to establish a systematic law—wasting query budget on uninformative high-$R^*$ equilibrium states.
 
-**Stage 2: Controlled Active Learning Scan (Rounds 31–60, AdaptiveAgent)**
-Fixing $c=0.10$, `reflect` boundary, and `lognormal` income distribution, scanning along $p$. $\beta_{\text{left}}$ decreases monotonically from 2.44 (very low $p$) to 0.87 (high $p$), exhibiting a **non-continuous candidate jump of ~1.4 units** around $R^* \approx 0.10 \sim 0.15$:
+**Phase 2: Controlled Active Learning Sweep (Rounds 31–60, AdaptiveAgent)**  
+Fixing $c=0.10$, `reflect` boundary, and `lognormal` income distribution, scanning along 1D shock parameter $p$. $\beta_{\text{left}}$ decreases monotonically from 2.44 (low $p$) to 0.87 (high $p$), exhibiting a **non-continuous candidate jump of ~1.4 units** around $R^* \approx 0.10 \sim 0.15$:
 
 ```
-Random Stage β:   0.92 ░ 4.48 ░ 1.78 ░ 0.97 ░ 2.37 ░ ...  ← Directionless (Random Scatter)
-Active Learning β: 2.44 → 1.05 → 0.97 → 0.87              ← Structured (Monotonic Candidate Jump)
-                    ↑
-             Candidate Jump at R* ≈ 0.10
+Random Phase β:          0.92 ░ 4.48 ░ 1.78 ░ 0.97 ░ 2.37 ░ ...  ← Unguided Uniform Sampling
+Active Learning Sweep β: 2.44 → 1.05 → 0.97 → 0.87              ← Monotonic Candidate Phase Jump
+                            ↑
+                     Candidate Transition Jump at R* ≈ 0.10
 ```
 
-This embodies the core value of AI-driven scientific discovery: **converting opportunistic signals in random exploration into reproducible, systematic phase transition curves**. Full logs available in [`docs/logbook/LOGBOOK_EN.md`](docs/logbook/LOGBOOK_EN.md).
+This captures the core paradigm of AI-driven scientific discovery: **transforming sporadic critical signals from unguided exploration into reproducible, systematic phase transition curves**. Full logs are documented in [`docs/logbook/LOGBOOK_EN.md`](docs/logbook/LOGBOOK_EN.md).
 
 ---
 
 ## 3. Key Experimental Results
 
-> All plots are programmatically generated and fully reproducible via `python3 main.py --mode full`.
+> All figures are programmatically generated and fully reproducible via `python3 main.py --mode full`.
 
 ### 3.1 Candidate Phase Transition Curve (Finite-Size Scaling)
 
-1D controlled parameter scan along shock probability $p$ with fixed dissipation $c=0.10$, `reflect` boundary, and `lognormal` income distribution. CUSUM detects a non-continuous candidate jump in $\beta_{\text{left}}$ around $R^* \approx 0.15 \sim 0.20$. Verified via **Finite-Size Scaling ($N \in [5k, 50k]$)**, the jump slope $\frac{d\beta}{d(1/N)}$ converges as $N$ increases.
+1D controlled parameter sweep along shock probability $p$ with fixed dissipation $c=0.10$, `reflect` boundary, and `lognormal` income distribution. CUSUM detects a non-continuous candidate jump in $\beta_{\text{left}}$ around $R^* \approx 0.15 \sim 0.20$. Verified via **Finite-Size Scaling ($N \in [5k, 50k]$)**, the jump derivative $\frac{d\beta}{d(1/N)}$ converges systematically as $N$ increases.
 
 ![Candidate Phase Transition R* = p/c](outputs/phase_transition_R_star.png)
 
-### 3.2 Unexpected Discovery 1: Absorbing Boundary Triggers Structural Collapse
+### 3.2 Unexpected Finding 1: Absorbing Boundaries Trigger Structural Collapse
 
-> 🔴 **Discovery completely unexpected prior to running code.**
+> 🔴 **Unanticipated Emergent Behavior Prior to Execution.**
 
-When switching boundary conditions from `reflect` to `absorb` (wealth collapses to zero upon reaching bottom), power-law fit goodness $R^2$ plunges from $> 0.85$ to $< 0.50$—the power-law distribution collapses completely. This demonstrates that **boundary conditions are not mere numerical parameters, but structural factors dictating the system's physical phase**.
+When switching boundary conditions from `reflect` to `absorb` (wealth collapses to zero upon hitting lower bound), power-law fit goodness $R^2$ dramatically drops from $> 0.85$ to $< 0.50$—the power-law distribution collapses completely. This demonstrates that **boundary conditions are not mere numerical parameters, but structural factors dictating the physical phase of the system**.
 
-Left-tail model selection (Power-Law vs. Lognormal vs. Exponential, using **Custom Pseudo-LR Comparison** with AIC/BIC):
+Model selection for the poverty left-tail (Power-Law vs. Lognormal vs. Exponential, evaluated via **Custom Pseudo-LR Comparison** with AIC/BIC):
 
 ![Left Tail Model Selection](outputs/left_tail_fit.png)
 
-### 3.3 Unexpected Discovery 2: Keynesian MPC Triggers Power-Law Collapse
+### 3.3 Unexpected Finding 2: Keynesian MPC Induces Power-Law Breakdown
 
-> 🔴 **Second key scientific discovery responding to conference feedback.**
+> 🔴 **Second Key Scientific Discovery Responding to Conference Feedback.**
 
-Encoding Keynesian Marginal Propensity to Consume (MPC: rich dissipation decreases with wealth $c(W) \sim W^{-\alpha}$) and Prospect Theory Loss Aversion (poor shock probability increases with falling wealth $p(W) \sim 1/W$) into behavioral dynamics, compared against linear Kesten baseline ($p=0.02, c=0.10$):
+Encoding Keynesian Marginal Propensity to Consume (MPC: rich dissipation rate decreases with wealth $c(W) \sim W^{-\alpha}$) and Prospect Theory Loss Aversion (poor shock probability increases with falling wealth $p(W) \sim 1/W$) into behavioral dynamics, contrasted against the standard linear Kesten baseline ($p=0.02, c=0.10$):
 
 ![Behavioral Modes & Power-Law Collapse](outputs/behavioral_mode_comparison.png)
 
-| Behavioral Mode | $\beta_{\text{left}}$ | Poverty Rate | Finding Summary |
+| Behavioral Mode | $\beta_{\text{left}}$ | Poverty Rate | Scientific Finding |
 | :--- | :--- | :--- | :--- |
 | Linear Kesten (Baseline) | 1.476 | 0.855 | Standard Power-Law Distribution |
 | Keynesian MPC | **0.000** ⚠️ | 0.936 | **Complete Power-Law Collapse** (Accelerated wealth condensation) |
-| Prospect Theory Loss Aversion | 1.009 | 0.832 | Slight attenuation of power-law |
-| Combined (MPC + Loss Aversion) | 0.739 | 0.809 | Significant weakening of power-law |
+| Prospect Theory Loss Aversion | 1.009 | 0.832 | Slight attenuation of power-law tail |
+| Combined (MPC + Loss Aversion) | 0.739 | 0.809 | Significant weakening of power-law scaling |
 
-### 3.4 Active Learning Agent vs. Random Search & Effect Size Reporting
+### 3.4 Active Learning Agent vs. Random Search Baseline & Effect Size
 
-Comparing cumulative exploration reward of UCB + Gaussian Process Surrogate against Random Search under equal budget (30 rounds each). Reporting **Effect Size (Cohen's d = 0.00)** and Welch's t-test to honestly present agent search characteristics in low-budget, high-noise environments:
+Comparing cumulative exploration reward of UCB + Gaussian Process Surrogate against Random Search under a fixed query budget (30 rounds each). Reporting **Effect Size (Cohen's d = 0.00)** alongside Welch's t-test to transparently convey agent search dynamics under high-variance environments:
 
 ![Active Learning vs Random Search](outputs/baseline_comparison.png)
 
@@ -93,7 +95,7 @@ Comparing cumulative exploration reward of UCB + Gaussian Process Surrogate agai
 
 ![Agent Parameter Trajectory](outputs/agent_trajectory.png)
 
-### 3.6 US-China Empirical Calibration & Counterfactual Policy Simulation
+### 3.6 Empirical Calibration & Counterfactual Policy Evaluation
 
 Using **Exploratory Macro Calibration**, incorporating exact simulated **Gini coefficient $G$ and Bottom-20% share $S_{20}$** directly into Loss $L = (G_{\text{sim}} - G_{\text{target}})^2 + (S_{20,\text{sim}} - S_{20,\text{target}})^2$, evaluating counterfactual policy scenarios:
 
