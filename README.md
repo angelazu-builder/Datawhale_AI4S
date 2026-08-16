@@ -41,7 +41,7 @@ AI 智能体的探索分为两个阶段，数据均来自 `outputs/kesten_explor
 
 ---
 
-## 二、核心实验结果
+## 三、核心实验结果
 
 > 以下图表均由代码自动生成，可通过 `python3 main.py --mode full` 完整复现。
 
@@ -96,7 +96,7 @@ AI 智能体的探索分为两个阶段，数据均来自 `outputs/kesten_explor
 
 ---
 
-## 三、研究设计
+## 四、研究设计
 
 ### 模型框架
 
@@ -152,7 +152,34 @@ $$W_{t+1} = A_t \cdot W_t + B_t$$
 
 ---
 
-## 四、工程架构 (v1.1.0)
+## 五、研究迭代记录（来自会议反馈与导师建议）
+
+本研究经历了两轮重要的方法论迭代，均来自外部反馈：
+
+**迭代一（评审建议 → 修复混杂实验）**  
+早期相变图同时改变了 $p$、$c$、边界条件和收入分布，然后压成 $R^*$ 比值——这是混杂实验，任何单个变量的变化都可能解释跳变。→ **修复**：改为控因 1D 扫描（固定 $c=0.10$, `reflect`, `lognormal`），消除混杂。
+
+**迭代二（会议建议 → 引入经济学行为模式，发现幂律崩溃）**  
+会议建议："把经济学书上的定性行为模式给 AI，看跑出来什么结果。"→ 实现了凯恩斯 MPC $c(W) \sim W^{-\alpha}$（富人耗散率随财富上升而降低）和前景理论损失厌恶 $p(W) \sim 1/W$（穷人冲击概率更高），与线性基准对比：
+
+| 行为模式 | $\beta_{\text{left}}$ | 贫困率 |
+|---------|----------------------|-------|
+| 线性 Kesten（基准） | 1.476 | 0.855 |
+| 凯恩斯 MPC | **0.000** ⚠️ 幂律完全崩溃 | 0.936 |
+| 前景理论损失厌恶 | 1.009 | 0.832 |
+| 组合（MPC + 损失厌恶） | 0.739 | 0.809 |
+
+**发现**：凯恩斯 MPC 将 $\beta_{\text{left}}$ 打至 0——幂律完全失效。机制：富人耗散率随财富降低 → 财富向顶端加速凝聚 → 底层失去自相似尾部结构。这是**第二个跑代码前完全没预期到的发现**。
+
+**其他两条会议建议的响应**：
+- 清华 FIB-Lab AgentSociety [[E6]](https://github.com/tsinghua-fib-lab/agentsociety/)：已引用为下一步多智能体框架参考；`src/network_simulator.py` 实现了 Scale-Free + Small-World 网络拓扑的初步结构化动力学。
+- "把人看成结构"：v2.0 目标为 Fokker-Planck 连续场方程 $\partial_t f = -\partial_w[\mu f] + \partial_w^2[Df]$，将离散 agent 替换为财富密度场。
+
+完整迭代日志见 [`docs/LOGBOOK.md`](docs/LOGBOOK.md)。
+
+---
+
+## 六、工程架构 (v1.1.0)
 
 ```
 Datawhale夏令营-AI4Research/
@@ -176,7 +203,7 @@ Datawhale夏令营-AI4Research/
 
 ---
 
-## 五、快速复现
+## 七、快速复现
 
 ```bash
 # 安装依赖（支持纯 NumPy 降级运行）
@@ -200,7 +227,7 @@ python3 main.py --mode single --p 0.02 --c 0.1 --boundary reflect
 
 ---
 
-## 六、参考文献
+## 八、参考文献
 
 - **[E1]** Kesten, H. (1973). *Random difference equations and Renewal theory for products of random matrices*. Acta Mathematica, 131(1), 207–248.
 - **[E2]** Bouchaud, J. P., & Mezard, M. (2000). *Wealth condensation in a simple model of economy*. Physica A, 282(3–4), 536–545.
@@ -211,7 +238,7 @@ python3 main.py --mode single --p 0.02 --c 0.1 --boundary reflect
 
 ---
 
-## 七、后续研究路线
+## 九、后续研究路线
 
 1. **提升 AI 主动学习显著性**：增加预算至 80–100 轮，调优 UCB 参数，Bootstrap 重采样代替 Welch's t-test。
 2. **精化相变边界**：密集扫描 $R^* \in [0.12, 0.22]$（步长 0.005），计算一阶导峰值置信区间。
