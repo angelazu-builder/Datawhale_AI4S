@@ -49,35 +49,46 @@ class ExperimentLogger:
             writer = csv.writer(f)
             writer.writerow(row)
 
+    class _NumpyEncoder(json.JSONEncoder):
+        """Custom JSON encoder that handles numpy scalars and arrays at any nesting depth."""
+        def default(self, obj):
+            try:
+                import numpy as np
+                if isinstance(obj, np.ndarray):
+                    return obj.tolist()
+                if isinstance(obj, np.floating):
+                    return float(obj)
+                if isinstance(obj, np.integer):
+                    return int(obj)
+                if isinstance(obj, np.bool_):
+                    return bool(obj)
+            except ImportError:
+                pass
+            return super().default(obj)
+
     def _sanitize(self, obj: Any) -> Any:
-        import numpy as np
-        if isinstance(obj, np.ndarray):
-            return obj.tolist()
-        elif isinstance(obj, (np.float32, np.float64, np.floating)):
-            return float(obj)
-        elif isinstance(obj, (np.int32, np.int64, np.integer)):
-            return int(obj)
-        elif isinstance(obj, dict):
+        """Strip non-serializable keys (e.g. large arrays stored under 'tail_wealth')
+        before passing to the JSON encoder."""
+        if isinstance(obj, dict):
             return {k: self._sanitize(v) for k, v in obj.items() if k != "tail_wealth"}
         elif isinstance(obj, list):
             return [self._sanitize(v) for v in obj]
         return obj
 
+    def _dump_json(self, data: Any, path: str):
+        """Sanitize then serialize using the numpy-aware encoder."""
+        clean = self._sanitize(data)
+        with open(path, "w") as f:
+            json.dump(clean, f, indent=2, cls=self._NumpyEncoder)
+
     def save_full_experiment_json(self, history: List[Dict[str, Any]], filename: str = "kesten_full_history.json"):
         """
         Save complete experiment history with histograms.
         """
-        target_path = os.path.join(self.log_dir, filename)
-        clean_history = self._sanitize(history)
-        with open(target_path, "w") as f:
-            json.dump(clean_history, f, indent=2)
+        self._dump_json(history, os.path.join(self.log_dir, filename))
 
     def save_scientific_signals_json(self, scientific_signals: Dict[str, Any], filename: str = "scientific_signals.json"):
         """
         Save categorized scientific discoveries, anomalies/counterexamples, and negative results.
         """
-        target_path = os.path.join(self.log_dir, filename)
-        clean_signals = self._sanitize(scientific_signals)
-        with open(target_path, "w") as f:
-            json.dump(clean_signals, f, indent=2)
-
+        self._dump_json(scientific_signals, os.path.join(self.log_dir, filename))
