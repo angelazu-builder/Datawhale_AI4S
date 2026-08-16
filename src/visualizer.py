@@ -167,7 +167,7 @@ class Visualizer:
 
         # Plot 1: Linear Histogram
         ax1.bar(bin_centers[valid], counts[valid], width=(bin_edges[1]-bin_edges[0]), color='#2ca02c', alpha=0.7, edgecolor='none')
-        ax1.set_title('Wealth Distribution Histogram ($W \leq 2.5$)', fontsize=11, fontweight='bold')
+        ax1.set_title(r'Wealth Distribution Histogram ($W \leq 2.5$)', fontsize=11, fontweight='bold')
         ax1.set_xlabel('Wealth $W$', fontsize=10)
         ax1.set_ylabel('Agent Count', fontsize=10)
         ax1.grid(True, linestyle=':', alpha=0.5)
