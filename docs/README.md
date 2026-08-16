@@ -22,7 +22,7 @@ docs/
 - [03_完整研究报告_Final_Report_v1.1.0.docx](file:///Users/angela/Downloads/Datawhale夏令营-AI4Research/docs/submission/03_完整研究报告_Final_Report_v1.1.0.docx)：包含完整公式推导、高分辨率图表嵌入及参考文献的 Word 报告。
 
 ### 2. 📔 `logbook/` — 假说演化与科研日志 (Research Logbook)
-- [LOGBOOK.md](file:///Users/angela/Downloads/Datawhale夏令营-AI4Research/docs/logbook/LOGBOOK.md)：记载 60 轮主动学习探索的全历程、真实实验日志数据、对导师/会议评审 4 条反馈建议的实证响应，以及两个**“跑代码前完全没有预料到的科学发现”**（吸收边界结构坍塌与凯恩斯 MPC 幂律崩溃）。
+- [LOGBOOK.md](file:///Users/angela/Downloads/Datawhale夏令营-AI4Research/docs/logbook/LOGBOOK.md)：记载 60 轮主动学习探索的全历程、真实实验日志数据、对同行/会议讨论 4 条反馈建议的实证响应，以及两个**“跑代码前完全没有预料到的科学发现”**（吸收边界结构坍塌与凯恩斯 MPC 幂律崩溃）。
 
 ### 3. 📖 `references/` — 背景参考资料 (Background & References)
 - `AI_for_Research赛事解读.pdf`：Datawhale 官方赛题解读与规则说明。
