@@ -37,3 +37,7 @@ env/
 
 # Temporary scratch directories
 scratch/
+
+repo-organizer-skill/
+
+.agents/
