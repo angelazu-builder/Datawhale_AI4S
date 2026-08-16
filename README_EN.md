@@ -10,6 +10,14 @@
 
 ---
 
+## 💡 Problem Definition Executive Summary
+
+- **Open Exploration Question**: Under Kesten stochastic wealth dynamics ($W_{t+1} = A_t \cdot W_t + B_t$), does the poverty left-tail decay exponent $\beta_{\text{left}}$ undergo a non-continuous candidate phase transition as the ratio of shock intensity to dissipation rate $R^* = p/c$ crosses a critical threshold?
+- **Discovery Signal Definition**: Under fixed dissipation $c=0.10$, a discovery signal is defined when a 1D scan along shock probability $p$ triggers a non-continuous step jump in $\beta_{\text{left}}$ ($\Delta \beta > 0.3$ consistent across 10 independent verification seeds) and demonstrates finite-size scaling convergence ($N \in [5k, 50k]$).
+- **AI Exploration Value**: Traditional grid searches easily miss non-continuous critical points. The AI Active Learning Agent (UCB + Gaussian Process Surrogate) automatically locates phase boundaries with minimal sample budget while capturing two emergent non-linear phenomena: absorbing boundary structural collapse and Keynesian MPC power-law breakdown.
+
+---
+
 ## 📌 Quick Navigation
 
 - 🏆 **Competition Deliverables**: [docs/submission/](docs/submission/) (Problem Definition v2, Original Version, & Final Research Report in Word/Markdown)

@@ -4,11 +4,19 @@
 
 **Candidate Phase Transitions in Wealth Inequality: An Active Learning Framework for Kesten Stochastic Dynamics**
 
-[![版本](https://img.shields.io/badge/版本-v1.1.0-blue.svg)](https://github.com/angelazu-builder/Datawhale_AI4S)
+[![Version](https://img.shields.io/badge/Version-v1.1.0-blue.svg)](https://github.com/angelazu-builder/Datawhale_AI4S)
 [![Python](https://img.shields.io/badge/Python-3.8%2B-green.svg)](https://www.python.org/)
-[![许可证](https://img.shields.io/badge/许可证-MIT-orange.svg)](LICENSE)
+[![License](https://img.shields.io/badge/License-MIT-orange.svg)](LICENSE)
 
 > Datawhale 夏令营 AI for Research · 开放探索赛道
+
+---
+
+## 💡 核心问题定义摘要 (Problem Definition Executive Summary)
+
+- **开放探索问题**：在 Kesten 随机财富动力学 ($W_{t+1} = A_t \cdot W_t + B_t$) 下，当随机冲击强度与耗散率之比 $R^* = p/c$ 越过临界点时，社会贫困左尾衰减指数 $\beta_{\text{left}}$ 是否存在非连续的候选相变跳变（Candidate Phase Transition）？
+- **发现信号定义**：在固定耗散率 $c=0.10$ 下，当单轴 $p$ 扫描触发贫困左尾指数 $\beta_{\text{left}}$ 的非连续阶跃（相对跳变 $\Delta \beta > 0.3$ 且跨 10 个独立验证种子一致），且通过有限尺寸缩放（$N \in [5k, 50k]$）证明其收敛性时，定义为系统相变突变信号。
+- **AI 探索价值**：传统的离散网格搜索极易遗漏非连续临界点，AI 主动学习智能体（UCB+高斯过程代理模型）能以最小采样点自动定位相变边界，并实时捕获“吸收边界引发结构坍塌”与“凯恩斯 MPC 诱发幂律崩溃”两大意料之外的物理/经济现象。
 
 ---
 
