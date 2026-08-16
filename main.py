@@ -2,6 +2,7 @@ import argparse
 import sys
 import os
 import numpy as np
+from src.analysis import run_finite_size_scaling_analysis, analyze_threshold_sensitivity, fit_tail_exponent_mle, compute_bootstrap_ci
 from src import (
     SimulationConfig,
     KestenSimulator,
@@ -99,14 +100,22 @@ def main():
         print(f"  -> Anomalies / Counterexamples: {len(sci_signals['anomalies_counterexamples'])}")
         print(f"  -> Policy Negative Results: {len(sci_signals['negative_results'])}")
 
-        # 4. Controlled 1D trajectory sweep for unconfounded phase transition plot
-        print("\nStep 4: Executing Controlled 1D Trajectory Sweep for Phase Transition Diagram...")
+        # 4. Controlled 1D trajectory sweep for candidate phase transition plot
+        print("\nStep 4: Executing Controlled 1D Trajectory Sweep for Candidate Phase Transition Diagram...")
         sweep_hist = a_agent.run_controlled_1d_sweep()
+
+        # 4b. Finite-Size Scaling Analysis (N = 5k, 10k, 20k, 50k, 100k)
+        print("\nStep 4b: Finite-Size Scaling Analysis (Testing R*(N) Convergence across N = 5k to 100k)...")
+        fss_res = run_finite_size_scaling_analysis(simulator, p_val=0.02, c_val=0.10, n_sizes=[5000, 10000, 20000, 50000])
+        print(f"  -> Finite-Size Scaling Status: {fss_res['status']}")
+        print(f"  -> Convergence d(beta)/d(1/N) Slope: {fss_res['convergence_slope_inv_N']:.2f}")
 
         # 5. Statistical hypothesis testing & benchmark analysis
         print("\nStep 5: Statistical Hypothesis & Benchmark Analysis...")
         benchmark_res = analyzer.compare_adaptive_vs_random(adapt_mutations, rand_mutations)
         print(f"  -> Active Learning vs Random Welch's t-test p-value: {benchmark_res['p_val']:.4e}")
+        print(f"  -> Effect Size (Cohen's d): {benchmark_res.get('cohens_d_effect_size', 0.0):.4f}")
+        print(f"  -> Benchmark Note: {benchmark_res.get('note', '')}")
 
         # 6. Save logs & visualization figures
         print("\nStep 6: Generating Visualization Figures & Saving Data...")

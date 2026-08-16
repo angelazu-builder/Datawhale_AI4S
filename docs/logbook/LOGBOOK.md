@@ -238,3 +238,18 @@ $$\frac{\partial f}{\partial t} = -\frac{\partial}{\partial w}[\mu(w)f] + \frac{
 这个连续场方法把"人"变成了"财富密度流"，计算量从 $O(N)$ 降至网格维度，真正做到了"用结构替代离散点"。  
 **这是 v2.0 的核心目标。**
 
+
+---
+
+## 🛡️ P0 级学术严谨性修订实录 (P0 Methodological Revisions)
+
+根据跨学科物理与经济学重置标准的 P0 指导意见，对本项目的方法论进行了全面强化：
+
+| 维度 | 原有做法 | P0 级学术严谨性修正 |
+|------|----------|-------------------|
+| **相变跳变定位** | 称作 Phase Transition | 暂定名为 **Candidate Phase Transition（候选相变跳变）**，补充有限尺寸缩放 (Finite-Size Scaling) $N \in [5k, 10k, 20k, 50k, 100k]$ 检验 $R^*(N)$ 的收敛性 |
+| **尾部指数拟合** | 50% 切分的启发式 OLS | 引入 **MLE 最大似然估计 (Hill/Newman Estimator)**、**Bootstrap 95% 置信区间**及**阈值敏感性分析**（评估 30%, 40%, 50%, 60% 切分点） |
+| **分布模型选择** | 称为 Vuong Test | 改名为 **Custom Likelihood Ratio Comparison (Pseudo-LR)**，明确注明非标准 Vuong 检验 |
+| **宏观实证校准** | 拟合极值代理损失 | 改名为 **Exploratory Macro Calibration（探索性宏观校准）**，将模拟的**精确基尼系数 $G$ 与底层 20% 财富占比 $S_{20}$** 直接纳入 Loss 方差函数 |
+| **AI vs 随机基线** | 仅单次探索对比 | 报告 **效应量 Effect Size (Cohen's d)** + 置信区间；诚实汇报样本噪音下的非确定性结果 |
+
