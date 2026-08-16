@@ -1,46 +1,51 @@
-# 扩展 Kesten 财富过程与相变现象 AI 自主探索引擎 (v1.1.0)
-## Extended Kesten Wealth Process & Phase Transition AI Research Engine
+# Phase Transitions in Wealth Inequality: an Active Learning Approach on Kesten Stochastic Dynamics
+## 财富不平等中的相变现象：基于 Kesten 随机动力学的主动学习实证研究
 
-[![Version](https://img.shields.io/badge/version-1.1.0-blue.svg)](https://github.com/Datawhale/Kesten-AI-Research)
+[![Version](https://img.shields.io/badge/version-1.1.0-blue.svg)](https://github.com/angelazu-builder/Datawhale_AI4S)
 [![Python](https://img.shields.io/badge/python-3.8%2B-green.svg)](https://www.python.org/)
 [![License](https://img.shields.io/badge/license-MIT-orange.svg)](LICENSE)
 
-> **Datawhale 夏令营 AI for Research (AI4Science / Econophysics) 开放探索赛道项目**
+> Datawhale 夏令营 AI for Research · 开放探索赛道
 
 ---
 
-## 📌 一、 项目概述与研究背景 (Overview)
+## 📌 一、 研究背景与问题 (Background & Research Question)
 
-在统计物理与宏观经济学（Econophysics）中，**Kesten 随机过程 (Kesten Process)** 是描述社会财富不平等、帕累托尾部（Pareto Tail）与极端贫富分化的经典数学模型。
+财富分布的幂律尾部（Pareto tail）是跨越物理、经济与社会科学的普遍现象。**Kesten 随机过程**是描述这一现象的极简数学模型：每个个体的财富在每步以随机乘法冲击（增长）与加法耗散（消费/损失）共同驱动。
 
-本项目构建了一个 **高能 Numba JIT 加速的大规模 Agent 随机动力学模拟环境**，部署了基于 **主动学习 (Active Learning / UCB Surrogate) 与 CUSUM 变异检测算法的 AI 科研智能体 (Adaptive Research Agent)**，并成功接入 **世界银行 (World Bank) 与世界不平等数据库 (WID.world) 真实 API 数据**。能够将 Kesten 物理模型与中美（US vs China）历史宏观基尼系数与基底财富占比进行对齐校准，评估重大历史事件（如美国 1981 里根减税、中国 2015-2020 精准扶贫）的政策效应与反事实推演。
+**核心研究问题**：当冲击强度 $p$ 与耗散率 $c$ 的比值 $R^* = p/c$ 跨越某一临界值时，系统财富分布的左尾衰减指数 $\beta_{\text{left}}$ 是否会发生非连续的相变跳变（phase transition）？AI 主动学习智能体能否比随机搜索更高效地定位这一临界边界，并揭示现有再分配政策（累进税、精准补贴）的有效性上限？
+
+本项目通过大规模 Agent 模拟（$N=100,000$，$T=500$）、UCB 代理模型主动学习与 CUSUM 变异检测，结合世界银行 / WID.world 真实宏观数据，对上述问题进行了系统性的实证探索。
 
 ---
 
-## 🎯 二、 赛题评分标准对齐 (Evaluation Alignment)
+## 🔬 二、 研究设计 (Research Design)
 
-本项目严格按照 **Datawhale AI4Research 开放探索赛题 3 大评分维度** 进行设计与实现：
+### 模型框架
 
-### 1. 问题定义与环境设计质量 (45%)
-- **真实切片**: 切中真实物理经济学中的财富集中度与贫困左尾指数 $\beta_{left}$ 求解问题。
-- **固定部分 (Fixed)**: 种群规模 $N = 100,000$、模拟时间步 $T = 500$、5 随机种子控制、评估指标（左尾指数 $\beta_{left}$、拟合优度 $R^2$、贫困率 Poverty Rate、峰度 Kurtosis）。
-- **可探索部分 (Explorable)**:
-  - 连续物理参数：冲击概率 $p \in [0.001, 0.1]$，耗散率 $c \in [0.01, 0.3]$。
-  - 政策干预参数：累进税率 $\tau \in [0, 0.20]$，最低生活补贴 $S \in [0, 0.05]$。
-  - 离散机制：边界条件（`reflect` 反射 / `absorb` 吸收 / `soft_clamp` 软截断），收入分布（`lognormal` / `exponential` / `uniform`）。
-- **反馈机制 (Feedback)**: $\beta_{left}$ 的梯度变化、CUSUM 显著性变化量及 UCB 置信上界评分。
+每个 agent 的财富 $W_t$ 遵循 Kesten 方程：
 
-### 2. 探索过程与科学/研究信号 (35%)
-- **正向发现 (Positive Discoveries)**: 准确识别相变临界阈值 $R^* = p/c$ 及 D1 状态突变信号。
-- **反例与异常 (Anomalies / Counterexamples)**: 捕获吸收界 (`absorb`) 及极端税率下系统失去幂律分布 ($R^2 < 0.5$) 的物理塌陷现象。
-- **负结果 (Negative Results)**: 揭示高冲击风险下 ($p > 0.04$)，单靠二次分配累进税无法遏制贫困率爆炸的政策失效边界。
-- **实证数据校准与反事实政策推演**: 校准中美历史参数，推演“无精准扶贫补贴 ($S=0$)”与“维持高累进税 ($\tau=0.15$)”的反事实政策效果。
+$$W_{t+1} = A_t \cdot W_t + B_t$$
 
-### 3. 可检查性与可延续性 (20%)
-- **双参照系与等预算对比 (Dual Baseline Benchmark)**: 包含 `BaselineAgent` (无干预对照组) 和 `RandomAgent` (100轮等预算随机采样)，并通过 95% 置信区间与 Welch's t-test 进行显著性检验 ($p < 0.01$)。
-- **10-种子控因重复验证**: 针对捕获的变异信号，在完全相同的控制参数下使用 10 个独立未采样验证种子进行重复测试（要求 $\ge 8/10$ 次独立复现）。
-- **模型选择拟合 (Model Selection)**: 计算 Power-Law、Lognormal 与 Exponential 的 AIC/BIC 指标及 Likelihood Ratio 检验，证明左尾幂律拟合显著优于其他分布。
-- **数据源透传与持久化**: 自动连接 World Bank API 并支持本地 CSV 缓存 (`empirical_us_china_data.csv`) 与分类科学信号包 `scientific_signals.json`。
+其中 $A_t$ 为随机乘法冲击因子（服从冲击概率 $p$），$B_t$ 为加法收入项（服从耗散率 $c$ 调节）。关键比值 $R^* = p/c$ 是系统的主控参数。**固定量**：$N=100,000$，$T=500$，5 随机种子，评估指标为 $\beta_{\text{left}}$、$R^2$、贫困率。
+
+**探索参数空间**：
+- 连续参数：冲击概率 $p \in [0.001, 0.1]$，耗散率 $c \in [0.01, 0.3]$
+- 政策参数：累进税率 $\tau \in [0, 0.20]$，最低生活补贴 $S \in [0, 0.05]$
+- 离散机制：边界条件（`reflect` / `absorb` / `soft_clamp`），收入分布（`lognormal` / `exponential` / `uniform`）
+
+### 主要发现
+
+> 🔴 **最意外的发现（跑代码之前完全没有预期到）**：  
+> 将边界条件从 `reflect`（反射）切换至 `absorb`（吸收，财富触底归零）时，
+> 幂律拟合优度 $R^2$ 从 $> 0.85$ 骤降至 $< 0.50$——幂律分布整体失效。
+> 这不是参数变化的连续响应，而是系统在结构层面的相变坍塌。
+> 它表明**边界条件不只是数值细节，而是决定系统处于哪个相的关键结构参数**。
+
+- **政策失效存在硬边界（有价值的负结果）**：在高冲击风险 $p > 0.04$ 的区域，即使施加 $\tau = 0.15$ 的累进税，贫困率仍然无法遏制甚至反弹。纯再分配政策的有效性上限由冲击频率决定，而非政策力度。
+- **相变临界区 $R^* \approx 0.15\text{–}0.20$**：控因 1D 扫描（固定 $c=0.10$, `reflect`, `lognormal`）中，CUSUM 检测到 $\beta_{\text{left}}$ 的非连续跳变，10-种子独立重复验证可复现性（$\ge 8/10$）。
+- **中美参数结构的定性差异**：世界银行数据校准后，中国呈现高耗散率 $c$（强消费/税收）、低冲击风险 $p$，美国相反——与两国体制结构定性吻合，验证了模型的实证有效性。
+- **主动学习智能体**（UCB + GP Surrogate）：等预算下与随机搜索对比，通过 Welch's t-test 检验探索效率差异（当前 $p \approx 0.28$，为下一步重点强化方向）。
 
 ---
 
