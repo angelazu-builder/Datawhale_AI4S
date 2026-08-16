@@ -2,18 +2,18 @@
 
 **Candidate Phase Transitions in Wealth Inequality: an Active Learning Approach on Kesten Stochastic Dynamics**
 
-[![版本](https://img.shields.io/badge/版本-1.1.0--P0--Rigor-blue.svg)](https://github.com/angelazu-builder/Datawhale_AI4S)
+[![版本](https://img.shields.io/badge/版本-v1.1.0-blue.svg)](https://github.com/angelazu-builder/Datawhale_AI4S)
 [![Python](https://img.shields.io/badge/Python-3.8%2B-green.svg)](https://www.python.org/)
 [![许可证](https://img.shields.io/badge/许可证-MIT-orange.svg)](LICENSE)
 
-> Datawhale 夏令营 AI for Research · 开放探索赛道 (P0 级学术严谨性修订版)
+> Datawhale 夏令营 AI for Research · 开放探索赛道 (学术严谨性修订版)
 
 ---
 
 ## 📌 快速导航 (Quick Navigation)
 
 - 🏆 **大赛评委 / 组委会专属**：[docs/submission/](docs/submission/) (含重写版初赛问题定义文档、原始版、完整研究报告 Word)
-- 📔 **跨学科研究者 / 同行评审**：[docs/logbook/LOGBOOK.md](docs/logbook/LOGBOOK.md) (含 60 轮真实探索数据、P0 严谨性修订实录、4 条会议建议回应)
+- 📔 **跨学科研究者 / 同行评审**：[docs/logbook/LOGBOOK.md](docs/logbook/LOGBOOK.md) (含 60 轮真实探索数据、方法论严谨性修订实录、4 条会议建议回应)
 - 📊 **图表与数据索引**：[outputs/](outputs/) (全套高清图片与 CSV/JSON 原始日志数据)
 - 📖 **背景资料与模版**：[docs/references/](docs/references/) (赛题解读 PPT、数理经济物理背景资料)
 
@@ -105,7 +105,7 @@ AI 智能体的探索分为两个阶段，数据均来自 [`outputs/kesten_explo
 
 ---
 
-## 四、研究设计与 P0 学术严谨性对应表 (Research Design & P0 Rigor)
+## 四、研究设计与学术严谨性对应表 (Research Design & Scientific Rigor)
 
 ### 模型框架
 
@@ -115,9 +115,9 @@ $$W_{t+1} = A_t \cdot W_t + B_t$$
 
 ---
 
-### 与赛题三维评分标准及 P0 严谨性修正对应关系
+### 与赛题三维评分标准及学术严谨性修正对应关系
 
-| 评分维度 | 对应设计 | P0 严谨性修正说明 |
+| 评分维度 | 对应设计 | 学术严谨性修正说明 |
 |----------|----------|-------------------|
 | **问题定义与环境设计 (45%)** | 固定量：$N$, $T$, 种子, 评估指标；探索量：$p$, $c$, $	au$, $S$, 边界条件 | 相变跳变命名修正为 **Candidate Phase Transition**；补充有限尺寸缩放 $N \in [5k, 50k]$ |
 | **探索过程与科学信号 (35%)** | D1 候选相变临界 + D2 吸收边界坍塌 & MPC 崩溃 + D3 政策失效边界 | 尾部估计增加 **MLE Hill Estimator**、**Bootstrap 95% CI** 与**阈值敏感性检验** |
@@ -127,7 +127,7 @@ $$W_{t+1} = A_t \cdot W_t + B_t$$
 
 ## 五、研究迭代记录（来自会议反馈与同行建议）
 
-本研究经历了两轮重要的方法论迭代及一轮 P0 学术严谨性修订：
+本研究经历了两轮重要的方法论迭代及一轮学术严谨性修订：
 
 **迭代一（评审建议 → 修复混杂实验）**  
 早期相变图同时改变了 $p$、$c$、边界条件和收入分布。→ **修复**：改为控因 1D 扫描（固定 $c=0.10$, `reflect`, `lognormal`），消除混杂。
@@ -135,7 +135,7 @@ $$W_{t+1} = A_t \cdot W_t + B_t$$
 **迭代二（会议建议 → 引入经济学行为模式，发现幂律崩溃）**  
 会议建议：“把经济学书上的定性行为模式给 AI。” → 实现了凯恩斯 MPC 和前景理论损失厌恶，发现了**第一个行为模式下的幂律崩溃现象**。
 
-**P0 学术严谨性修正**：
+**学术严谨性修正**：
 - 澄清候选相变定义，增加 Finite-Size Scaling。
 - 引入 MLE Hill 估计器与 Bootstrap CI。
 - 明确标注 Custom Pseudo-LR 似然比比对与 Exploratory 校准。
@@ -171,7 +171,7 @@ Datawhale_AI4S / Datawhale夏令营-AI4Research/
 ├── docs/                          # 📚 分读者群文档中心 (Documentation Hub)
 │   ├── README.md                  # 文档导航指南
 │   ├── submission/                # 🏆 大赛提交件（01_问题定义v2.docx, 03_Final_Report.docx）
-│   ├── logbook/                   # 📔 假说演化、P0 修订实录与 60 轮迭代日志 (LOGBOOK.md)
+│   ├── logbook/                   # 📔 假说演化、方法论修订实录与 60 轮迭代日志 (LOGBOOK.md)
 │   └── references/                # 📖 赛题解读 PPT、背景资料与空白模版
 │
 ├── outputs/                       # 📊 自动生成的图表与科学日志

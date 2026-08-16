@@ -238,11 +238,11 @@ $$\frac{\partial f}{\partial t} = -\frac{\partial}{\partial w}[\mu(w)f] + \frac{
 
 ---
 
-## 🛡️ P0 级学术严谨性修订实录 (P0 Methodological Revisions)
+## 🛡️ 方法论与学术严谨性修订实录 (Methodological & Scientific Rigor Revisions)
 
-根据跨学科物理与经济学重置标准的 P0 指导意见，对本项目的方法论进行了全面强化：
+根据跨学科物理与经济学的方法论规范指导，对本项目的方法论进行了全面强化：
 
-| 维度 | 原有做法 | P0 级学术严谨性修正 |
+| 维度 | 原有做法 | 学术严谨性修正 |
 |------|----------|-------------------|
 | **相变跳变定位** | 称作 Phase Transition | 暂定名为 **Candidate Phase Transition（候选相变跳变）**，补充有限尺寸缩放 (Finite-Size Scaling) $N \in [5k, 10k, 20k, 50k, 100k]$ 检验 $R^*(N)$ 的收敛性 |
 | **尾部指数拟合** | 50% 切分的启发式 OLS | 引入 **MLE 最大似然估计 (Hill/Newman Estimator)**、**Bootstrap 95% 置信区间**及**阈值敏感性分析**（评估 30%, 40%, 50%, 60% 切分点） |
