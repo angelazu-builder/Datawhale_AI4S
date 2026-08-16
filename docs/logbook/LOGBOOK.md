@@ -1,5 +1,5 @@
 # 探索日志 / Exploration Logbook
-## Phase Transitions in Wealth Inequality — Kesten AI Research Engine
+## Phase Transitions in Wealth Inequality — Research Logbook
 
 **项目**: Phase Transitions in Wealth Inequality: an Active Learning Approach on Kesten Stochastic Dynamics  
 **阶段**: 初赛 (v1.1.0) | **最后更新**: 2026-08-16
@@ -53,7 +53,7 @@
 
 ## 👥 来自导师与同行的建议
 
-### 评审 Review（预审评委）
+### 同行与导师书面建议
 
 > "R* = p/c 的图不能证明相变——每个点同时改变了多个变量，混杂。"
 
@@ -104,13 +104,10 @@
 这次最重要的教训：**问题定义的精确性比模型复杂性更重要。**
 
 早期的"相变图"将 p、c、边界条件、收入分布同时变化后压成 R* 比值——
-看起来像相变图，实际上是混杂实验。评委一针见血。修复它不需要更复杂的模型，
+看起来像相变图，实际上是混杂实验。同行意见一针见血。修复它不需要更复杂的模型，
 只需要更严格的实验控制。
 
 **AI 可以比人更高效地搜索参数空间，但它无法替代人对实验设计的把关。**
-
----
-*Supervisor: Angela Zu | AI Research Engine v1.1.0 | 2026-08-16*
 
 ---
 
